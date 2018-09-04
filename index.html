@@ -4,51 +4,59 @@
     <title>Pixel Art Maker</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="pixel art maker web app">
     <link href="https://fonts.googleapis.com/css?family=Bungee+Shade" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 align-items-center" id="form-wrapper">
-                <h5>Choose Grid Size</h5>
-                <form id="sizePicker">
-                    <div class="form-group">
-                        <label for="input-height" class="form-label">Grid Height:</label>
-                        <input class="form-control" type="number" id="input_height" name="height" min="1" max="20" value="1">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="input-width" class="form-label">Grid Width:</label>
-                        <input class="form-control" type="number" id="input_width" name="width" min="1" max="30" value="1">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="colorPicker" class="form-label">Pick the color(s):</label>
-                        <input class="form-control" type="color" id="colorPicker" name="color">
-                    </div>
-                    <input type="submit" class="btn btn-info" value="Make grid">
-                    <input id="reset" type="button" class="btn btn-info" value="Clear canvas">
-                </form>
-                <div id="instructions">
-                    <p>Click to color</p>
-                    <p>Double click to erase</p>
-                    <p>Have fun!</p>
+    <main class="">
+        <!-- controls -->
+        <section id="form-wrapper">
+            <h3>Choose Grid Size</h3>
+            <form id="sizePicker">
+                <div class="grid-input">
+                    <label for="input-height" ></label>
+                    <input type="number" id="input_height" name="height" placeholder="Grid height" min="1" max="25">
                 </div>
+                
+                <div class="grid-input">
+                    <label for="input-width" ></label>
+                    <input type="number" id="input_width" name="width" placeholder="Grid width" min="1" max="40">
+                </div>
+                
+                <input type="submit" class="button" value="Make grid">
+                <input id="reset" type="button" class="button" value="Reset">
+
+                <div class="grid-input">
+                    <label for="colorPicker">Pick a color</label>
+                    <input type="color" id="colorPicker" name="color">
+                </div>
+            </form>
+
+            <div id="instructions">
+                <h3>Instructions:</h3>
+                <p>Left click to color</p>
+                <p>Drag and draw</p>
+                <p>Double click to erase</p>
+                <p>Save pixel art</p>
             </div>
-            
-            <div class="col-md-9">
-                <h1>Pixel Art Maker</h1>
-                <table id="pixel_canvas">
-	            </table>
+
+            <a id="download" href="#"><img src="download-symbol.svg"></a>
+        </section>
+        
+        <!-- canvas -->
+        <section class="canvas">
+            <h1 class="title">Pixel Art Maker</h1>
+            <div id="canvas-wrapper">
+                <table id="pixel_canvas"></table>
             </div>
-        </div>
-    </div>
+        </section>
+    
+    </main>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="dom-to-image.min.js"></script>
     <script src="scripts.js" type="text/jscript"></script>
 </body>
 </html>

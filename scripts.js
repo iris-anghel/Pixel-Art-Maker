@@ -1,41 +1,80 @@
-var submitQuery = $('input[type="submit"]');
-var canvas = $('#pixel_canvas');
-var reset = $('#reset');   
+const submitQuery = $('input[type="submit"]');
+const pixelCanvas = $('#pixel_canvas');
+const downloadTool = $('#download');
+const reset = $('#reset');
 
-submitQuery.click(function(event) {
-    event.preventDefault();
-    clearGrid();
-    makeGrid();
-});
+gridInit();
+
+function gridInit() {
+	let initHeight = 25;
+	let initWidth = 25;
+	for (let x = 0; x < initHeight; x++) {
+		pixelCanvas.append('<tr></tr>');
+	}
+	 
+	for (let y = 0; y < initWidth; y++) {
+		$('tr').append('<td></td>');
+	} 
+}
 
 function makeGrid() {
+	let gridHeight = $('#input_height').val();
+	let gridWidth = $('#input_width').val();
 	
-	var gridHeight = $('#input_height').val();
-	var gridWidth = $('#input_width').val();
-	
-	for (x = 0; x < gridHeight; x++) {
-	   canvas.append('<tr></tr>');
+	for (let x = 0; x < gridHeight; x++) {
+		pixelCanvas.append('<tr></tr>');
 	}
-	
-	for (y = 0; y < gridWidth; y++) {
+	for (let y = 0; y < gridWidth; y++) {
 	   $('tr').append('<td></td>');
-	} 
-	
-	canvas.on("click", "td", function() {
-		var color = $("#colorPicker").val();
-		$(this).css('backgroundColor', color); 
-	});	
-    
-    canvas.on("dblclick", "td", function() {
-        $(this).css('backgroundColor', '');
-    });
+	}	
 }
 
 function clearGrid() {
-    canvas.children().remove();
+    pixelCanvas.children().remove();
 }
 
-reset.on("click", function() {
-  canvas.empty();
+function emptyCanvas() {
+	clearGrid();
+	gridInit();
+}
+
+submitQuery.click(function(event) {
+    event.preventDefault();
+	clearGrid();
+    makeGrid();
 });
+
+pixelCanvas.on("click", "td", function() {
+	let color = $("#colorPicker").val();
+	$(this).css('backgroundColor', color); 
+});	
+
+pixelCanvas.on("mousedown", "tr td", function() {
+	let color = $("#colorPicker").val();
+	$(this).css('backgroundColor', color);
+	$('tr td').bind("mousemove", function () {
+		$(this).css('backgroundColor', color);
+	}).mouseup(function() {
+		$('td').unbind('mousemove');
+	});
+})
+
+pixelCanvas.on("dblclick", "td", function() {
+	$(this).css('backgroundColor', '');
+});
+
+reset.on("click", emptyCanvas);
+
+downloadTool.on('click', function() {
+	domtoimage.toJpeg(document.getElementById('canvas-wrapper'), { quality: 0.95 })
+    .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'pixel-art.jpeg';
+        link.href = dataUrl;
+        link.click();
+    });
+})
+
+
+
 
